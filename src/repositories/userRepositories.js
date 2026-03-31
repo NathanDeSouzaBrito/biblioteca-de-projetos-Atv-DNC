@@ -24,7 +24,6 @@ function createUserRepository(newUser) {
             } else {
                 res(
                     { 
-                        message: "User created successfully", 
                         user: { id: this.lastID, ...newUser } 
                     }
                 );
@@ -33,4 +32,19 @@ function createUserRepository(newUser) {
     });
 }
 
-export default { createUserRepository };
+function getUsersRepository() {
+    return new Promise((res, rej) => {
+        db.all(`
+            SELECT id, username, email, password, avatar
+            FROM users
+        `, [], (err, rows) => {
+            if (err) {
+                rej(err);
+            } else {
+                res(rows);
+            }
+        });
+    });
+}
+
+export default { createUserRepository, getUsersRepository };
