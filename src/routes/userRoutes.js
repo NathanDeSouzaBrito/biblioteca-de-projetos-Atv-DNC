@@ -7,6 +7,7 @@ const router = Router();
 
 router.post("/users", validate(userSchema), userControllers.createUserController);
 router.get("/users", userControllers.getUsersController);
+router.post("/users/login", userControllers.loginUserController);
 router.get("/users/:id", validateUserId, userControllers.findUserByIdController);
 router.patch("/users/:id", validateUserId, userControllers.updateUserController);
 router.delete("/users/:id", validateUserId, userControllers.deleteUserController);

@@ -18,15 +18,11 @@ function createUserRepository(newUser) {
             INSERT INTO users (username, email, password, avatar)
             VALUES (?, ?, ?, ?)
         `, [username, email, password, avatar], 
-        (err) => {
+         function (err) {
             if (err) {
                 rej(err);
             } else {
-                res(
-                    { 
-                        user: { id: this.lastID, ...newUser } 
-                    }
-                );
+                res({ id: this.lastID, username, email, password, avatar });
             }
         });
     });
@@ -50,7 +46,7 @@ function getUsersRepository() {
 const findUserByEmailOrUsername = (email) => {
     return new Promise((res, rej) => {
         db.get(`
-                SELECT id, username, email, avatar 
+                SELECT id, username, email, password, avatar 
                 FROM users
                 WHERE email = ?
             `, 
